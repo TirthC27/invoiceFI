@@ -1,0 +1,11 @@
+{
+  "assetRegistry": "0x329d83B87A0299564bbD3902C2D0c5F352728e76",
+  "investmentVault": "0x8dC86064Fa95bdEff1281279942b012AAaEb8DA9",
+  "riskEngine": "0x7c5C4d7D1a963AE025fB8De91931ffBb39D0F298",
+  "defaultEngine": "0x4477DE0dea818cBF7D5D4c5144C87762E4dE7715",
+  "recoveryAuction": "0xd491021F00D10c7b98bEC48925dA3a7A4c8472dE",
+  "lossClaimNFT": "0xC199E88Fb4b390180268bda69d455DEfc30B0888",
+  "network": "mantleTestnet",
+  "chainId": 5003,
+  "deployedAt": "2026-01-12T14:23:13.799Z"
+}

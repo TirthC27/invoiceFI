@@ -1,0 +1,135 @@
+# Dependencies
+node_modules/
+venv/
+.venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.egg-info/
+.pytest_cache/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+backend/.env
+frontend/.env.local
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+artifacts/
+cache/
+typechain-types/
+
+# Blockchain
+blockchain/artifacts/
+blockchain/cache/
+blockchain/typechain-types/
+.openzeppelin/
+deployments/localhost/
+
+# IDE & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+.coverage
+.nyc_output
+htmlcov/
+.pytest_cache/
+*.cover
+*.py,cover
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# Uploads & Temp files
+uploads/
+temp_uploads/
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+.cache/
+
+# Package files
+*.tgz
+*.tar.gz
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Optional: Hardhat/Blockchain (uncomment if needed)
+# hardhat.config.ts
+# .secret
+
+# Optional: Sensitive deployment info
+# scripts/deploy.ts
+
+# Mac
+.AppleDouble
+.LSOverride
+
+# Windows
+[Tt]humbs.db
+[Tt]humbs.db:encryptable
+ehthumbs_vista.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*

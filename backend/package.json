@@ -1,0 +1,5 @@
+{
+  "name": "@terra/backend",
+  "version": "1.0.0",
+  "description": "TERRA Backend API with FastAPI"
+}
