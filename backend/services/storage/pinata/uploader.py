@@ -27,7 +27,7 @@ class PinataUploader:
         file_content: bytes,
         filename: str,
         metadata: Optional[Dict[str, Any]] = None
-    ) -> str:
+    ) -> Dict[str, Any]:
         """
         Upload file to IPFS via Pinata.
         
@@ -37,8 +37,15 @@ class PinataUploader:
             metadata: Optional metadata
             
         Returns:
-            IPFS CID hash
+            Dict with 'cid' key containing IPFS hash
         """
+        # Check if Pinata credentials are configured
+        if not self.api_key or not self.api_secret:
+            # Return mock CID for development without Pinata
+            import hashlib
+            mock_cid = f"Qm{hashlib.sha256(file_content).hexdigest()[:44]}"
+            return {"cid": mock_cid, "mock": True}
+        
         headers = {
             "pinata_api_key": self.api_key,
             "pinata_secret_api_key": self.api_secret,
@@ -58,11 +65,11 @@ class PinataUploader:
             ) as response:
                 if response.status == 200:
                     result = await response.json()
-                    return result['IpfsHash']
+                    return {"cid": result['IpfsHash']}
                 else:
                     raise Exception(f"Pinata upload failed: {await response.text()}")
                     
-    async def upload_json(self, data: Dict[str, Any]) -> str:
+    async def upload_json(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """
         Upload JSON data to IPFS.
         
@@ -70,8 +77,16 @@ class PinataUploader:
             data: JSON-serializable data
             
         Returns:
-            IPFS CID hash
+            Dict with 'cid' key containing IPFS hash
         """
+        # Check if Pinata credentials are configured
+        if not self.api_key or not self.api_secret:
+            # Return mock CID for development without Pinata
+            import hashlib
+            import json
+            mock_cid = f"Qm{hashlib.sha256(json.dumps(data, sort_keys=True).encode()).hexdigest()[:44]}"
+            return {"cid": mock_cid, "mock": True}
+        
         headers = {
             "pinata_api_key": self.api_key,
             "pinata_secret_api_key": self.api_secret,
@@ -86,6 +101,6 @@ class PinataUploader:
             ) as response:
                 if response.status == 200:
                     result = await response.json()
-                    return result['IpfsHash']
+                    return {"cid": result['IpfsHash']}
                 else:
                     raise Exception(f"Pinata JSON upload failed: {await response.text()}")

@@ -6,7 +6,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/store/auth';
-import { api } from '@/lib/api';
+import apiClient from '@/lib/api';
 import { Asset, AssetType, AssetStatus, RiskLevel } from '@/types';
 import Link from 'next/link';
 
@@ -23,7 +23,7 @@ export default function AssetsPage() {
   useEffect(() => {
     const fetchAssets = async () => {
       try {
-        const response = await api.get('/assets', { params: filter });
+        const response = await apiClient.get('/assets', { params: filter });
         setAssets(response.data.items || []);
       } catch (error) {
         console.error('Failed to fetch assets:', error);

@@ -9,7 +9,7 @@ import { useParams } from 'next/navigation';
 import { useAccount } from 'wagmi';
 import { formatEther, parseEther } from 'viem';
 import { useAuthStore } from '@/store/auth';
-import { api } from '@/lib/api';
+import apiClient from '@/lib/api';
 import { Asset, AssetStatus, RiskLevel, Investment, Payment } from '@/types';
 import Link from 'next/link';
 
@@ -28,9 +28,9 @@ export default function AssetDetailPage() {
     const fetchAsset = async () => {
       try {
         const [assetRes, investmentsRes, paymentsRes] = await Promise.all([
-          api.get(`/assets/${params.id}`),
-          api.get(`/assets/${params.id}/investments`),
-          api.get(`/assets/${params.id}/payments`),
+          apiClient.get(`/assets/${params.id}`),
+          apiClient.get(`/assets/${params.id}/investments`),
+          apiClient.get(`/assets/${params.id}/payments`),
         ]);
         setAsset(assetRes.data);
         setInvestments(investmentsRes.data.items || []);
@@ -52,11 +52,11 @@ export default function AssetDetailPage() {
     
     setIsInvesting(true);
     try {
-      await api.post(`/assets/${asset.id}/invest`, {
+      await apiClient.post(`/assets/${asset.id}/invest`, {
         amount: parseFloat(investAmount),
       });
       // Refresh investments
-      const res = await api.get(`/assets/${asset.id}/investments`);
+      const res = await apiClient.get(`/assets/${asset.id}/investments`);
       setInvestments(res.data.items || []);
       setInvestAmount('');
     } catch (error) {

@@ -3,7 +3,11 @@
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { useState } from 'react';
 
-export function ConnectButton() {
+interface ConnectButtonProps {
+  showBalance?: boolean;
+}
+
+export function ConnectButton({ showBalance = true }: ConnectButtonProps) {
   const { address, isConnected } = useAccount();
   const { connectors, connect } = useConnect();
   const { disconnect } = useDisconnect();

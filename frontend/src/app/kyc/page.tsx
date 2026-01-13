@@ -7,7 +7,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/auth';
-import { api } from '@/lib/api';
+import { kycApi } from '@/lib/api';
 import { KYCStatus } from '@/types';
 
 type Step = 'info' | 'document' | 'selfie' | 'review' | 'complete';
@@ -53,20 +53,20 @@ export default function KYCPage() {
     setError(null);
 
     try {
-      const form = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        if (value instanceof File) {
-          form.append(key, value);
-        } else if (value) {
-          form.append(key, String(value));
-        }
-      });
+      // Step 1: Upload document
+      if (formData.document_front) {
+        await kycApi.uploadDocument(formData.document_front);
+      }
 
-      await api.post('/kyc/submit', form, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      // Step 2: Upload selfie
+      if (formData.selfie) {
+        await kycApi.uploadSelfie(formData.selfie);
+      }
 
-      await refreshUser();
+      // Step 3: Submit for review
+      await kycApi.submit();
+
+      await refreshUser?.();
       setStep('complete');
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Submission failed');

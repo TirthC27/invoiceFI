@@ -13,21 +13,21 @@
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
     "@hookform/resolvers": "^3.3.4",
-    "@tanstack/react-query": "^5.17.0",
+    "@tanstack/react-query": "4.36.1",
     "autoprefixer": "^10.4.17",
     "axios": "^1.6.5",
     "clsx": "^2.1.0",
     "date-fns": "^3.2.0",
-    "next": "14.1.0",
+    "next": "14.2.20",
     "postcss": "^8.4.33",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-hook-form": "^7.49.3",
     "recharts": "^2.10.4",
     "tailwind-merge": "^2.2.0",
     "tailwindcss": "^3.4.1",
-    "viem": "^2.7.0",
-    "wagmi": "^2.5.0",
+    "viem": "1.21.4",
+    "wagmi": "1.4.13",
     "zod": "^3.22.4",
     "zustand": "^4.4.7"
   },
@@ -38,5 +38,9 @@
     "eslint": "^8.56.0",
     "eslint-config-next": "14.1.0",
     "typescript": "^5.3.3"
+  },
+  "overrides": {
+    "react-native": false,
+    "@react-native-async-storage/async-storage": false
   }
 }

@@ -7,7 +7,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/store/auth';
-import { api } from '@/lib/api';
+import apiClient from '@/lib/api';
 import { Asset, RiskLevel, AssetStatus } from '@/types';
 
 interface RiskMetrics {
@@ -46,9 +46,9 @@ export default function RiskMonitoringPage() {
     const fetchData = async () => {
       try {
         const [metricsRes, defaultsRes, assetsRes] = await Promise.all([
-          api.get('/admin/risk/metrics'),
-          api.get('/admin/risk/defaults'),
-          api.get('/admin/risk/high-risk-assets'),
+          apiClient.get('/admin/risk/metrics'),
+          apiClient.get('/admin/risk/defaults'),
+          apiClient.get('/admin/risk/high-risk-assets'),
         ]);
         setMetrics(metricsRes.data);
         setDefaults(defaultsRes.data.items || []);

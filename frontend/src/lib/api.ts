@@ -64,11 +64,14 @@ apiClient.interceptors.response.use(
 
 export default apiClient;
 
+// Alias for default export (backwards compatibility)
+export const api = apiClient;
+
 // ==================== Auth API ====================
 
 export const authApi = {
   getNonce: async (walletAddress: string) => {
-    const response = await apiClient.get(`/auth/nonce/${walletAddress}`);
+    const response = await apiClient.post('/auth/nonce', { wallet_address: walletAddress });
     return response.data;
   },
 
@@ -106,10 +109,10 @@ export const kycApi = {
     return response.data;
   },
 
-  uploadId: async (file: File) => {
+  uploadDocument: async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
-    const response = await apiClient.post('/kyc/upload-id', formData, {
+    const response = await apiClient.post('/kyc/upload/document', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return response.data;
@@ -118,7 +121,7 @@ export const kycApi = {
   uploadSelfie: async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
-    const response = await apiClient.post('/kyc/upload-selfie', formData, {
+    const response = await apiClient.post('/kyc/upload/selfie', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return response.data;

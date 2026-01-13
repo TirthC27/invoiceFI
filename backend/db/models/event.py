@@ -3,8 +3,7 @@ System event model for timeline and audit trail.
 """
 
 from datetime import datetime
-from sqlalchemy import Column, String, DateTime, Text, Integer
-from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy import Column, String, DateTime, Text, Integer, JSON
 from uuid import uuid4
 
 from db.database import Base
@@ -21,8 +20,8 @@ class Event(Base):
     event_type = Column(String(100), nullable=False, index=True)
     source = Column(String(50), nullable=False, index=True)  # 'blockchain', 'agent', 'system', 'user'
     
-    # Event payload
-    payload = Column(JSONB, nullable=False)
+    # Event payload (use JSON for cross-db compatibility)
+    payload = Column(JSON, nullable=False)
     
     # Optional references
     user_id = Column(Integer, nullable=True, index=True)

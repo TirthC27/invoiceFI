@@ -1,38 +1,38 @@
 'use client';
 
-/**
- * App Providers - Using wagmi without RainbowKit to avoid Gemini connector
- */
-
+import { WagmiConfig } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { WagmiProvider } from 'wagmi';
 import { config } from '@/lib/wagmi';
 import { useState, useEffect } from 'react';
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const [mounted, setMounted] = useState(false);
   const [queryClient] = useState(
     () =>
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 60 * 1000, // 1 minute
+            staleTime: 60 * 1000,
             refetchOnWindowFocus: false,
           },
         },
       })
   );
 
-  const [mounted, setMounted] = useState(false);
-
+  // Prevent hydration mismatch by only rendering after mount
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  if (!mounted) {
+    return null;
+  }
+
   return (
-    <WagmiProvider config={config}>
+    <WagmiConfig config={config}>
       <QueryClientProvider client={queryClient}>
-        {mounted ? children : null}
+        {children}
       </QueryClientProvider>
-    </WagmiProvider>
+    </WagmiConfig>
   );
 }

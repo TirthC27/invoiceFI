@@ -35,6 +35,14 @@ export enum RiskLevel {
   CRITICAL = 'critical',
 }
 
+export enum AssetType {
+  REAL_ESTATE = 'real_estate',
+  INVOICE = 'invoice',
+  EQUIPMENT = 'equipment',
+  COMMODITY = 'commodity',
+  OTHER = 'other',
+}
+
 export enum AuctionStatus {
   PENDING = 'pending',
   ACTIVE = 'active',

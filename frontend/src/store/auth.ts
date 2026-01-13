@@ -22,11 +22,12 @@ interface AuthState {
   logout: () => void;
   updateKYCStatus: (status: KYCStatus) => void;
   updateRole: (role: UserRole) => void;
+  refreshUser: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       token: null,
       refreshToken: null,
@@ -68,6 +69,18 @@ export const useAuthStore = create<AuthState>()(
         set((state) => ({
           user: state.user ? { ...state.user, role } : null,
         })),
+
+      refreshUser: async () => {
+        const token = get().token;
+        if (!token) return;
+        try {
+          const { authApi } = await import('@/lib/api');
+          const user = await authApi.me();
+          set({ user });
+        } catch (error) {
+          console.error('Failed to refresh user:', error);
+        }
+      },
     }),
     {
       name: 'terra-auth',

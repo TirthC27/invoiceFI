@@ -1,16 +1,12 @@
 /**
- * Wagmi + RainbowKit Configuration for Mantle
- * Using explicit connectors to exclude Gemini (avoids lodash ESM issues)
+ * Pure Web Wagmi Configuration for Mantle
+ * Web-only setup - no MetaMask SDK, no React Native, no RainbowKit
+ * Using wagmi v1 API
  */
 
-import { http, createConfig } from 'wagmi';
-import { Chain } from 'wagmi/chains';
-import {
-  metaMask,
-  walletConnect,
-  coinbaseWallet,
-  injected,
-} from '@wagmi/connectors';
+import { configureChains, createConfig } from 'wagmi';
+import { publicProvider } from 'wagmi/providers/public';
+import { type Chain } from 'wagmi';
 
 // Mantle Sepolia Testnet
 export const mantleSepolia: Chain = {
@@ -64,25 +60,17 @@ export const mantleMainnet: Chain = {
   testnet: false,
 };
 
-// Wagmi config - using explicit connectors to avoid Gemini (causes @metamask/utils lodash ESM error)
+// Pure web-only wagmi config using window.ethereum (no SDK, no connectors import)
+// MetaMask, Brave, Coinbase Extension work automatically via browser injection
+const { chains, publicClient, webSocketPublicClient } = configureChains(
+  [mantleSepolia, mantleMainnet],
+  [publicProvider()]
+);
+
 export const config = createConfig({
-  chains: [mantleSepolia, mantleMainnet],
-  connectors: [
-    metaMask(),
-    walletConnect({
-      projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'demo',
-      showQrModal: true,
-    }),
-    coinbaseWallet({
-      appName: 'TERRA',
-    }),
-    injected(),
-  ],
-  transports: {
-    [mantleSepolia.id]: http(),
-    [mantleMainnet.id]: http(),
-  },
-  ssr: true,
+  autoConnect: true,
+  publicClient,
+  webSocketPublicClient,
 });
 
 // Contract addresses per chain

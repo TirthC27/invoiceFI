@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAccount } from 'wagmi';
 import { useAuthStore } from '@/store/auth';
-import { api } from '@/lib/api';
+import apiClient from '@/lib/api';
 import { AssetType } from '@/types';
 
 export default function CreateAssetPage() {
@@ -76,7 +76,7 @@ export default function CreateAssetPage() {
         form.append('legal_agreement', formData.legal_agreement);
       }
 
-      const response = await api.post('/assets', form, {
+      const response = await apiClient.post('/assets', form, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 

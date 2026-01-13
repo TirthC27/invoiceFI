@@ -7,7 +7,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/store/auth';
-import { api } from '@/lib/api';
+import apiClient from '@/lib/api';
 
 interface OracleConfig {
   id: string;
@@ -27,7 +27,7 @@ export default function OracleConfigPage() {
   useEffect(() => {
     const fetchOracles = async () => {
       try {
-        const response = await api.get('/admin/oracles');
+        const response = await apiClient.get('/admin/oracles');
         setOracles(response.data.items || []);
       } catch (error) {
         console.error('Failed to fetch oracles:', error);
